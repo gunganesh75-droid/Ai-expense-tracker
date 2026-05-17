@@ -14,7 +14,8 @@ const AIInsights = () => {
     setLoading(true)
     setError(null)
     try {
-      const response = await axios.post('http://localhost:5000/api/ai-insights')
+      const API_BASE_URL = import.meta.env.VITE_API_URL || "https://ai-expense-tracker-x49e.onrender.com"
+      const response = await axios.post(`${API_BASE_URL}/api/ai-insights`)
       setInsights(response.data)
     } catch (err) {
       setError(err.response?.data?.message || "Failed to connect to Gemini AI. Make sure your API key is set.")

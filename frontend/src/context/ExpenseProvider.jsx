@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import { ExpenseContext } from "./ExpenseContext"
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || ""
+const API_BASE_URL = import.meta.env.VITE_API_URL || "https://ai-expense-tracker-x49e.onrender.com"
 
 const ExpenseProvider = ({ children }) => {
   const [expenses, setExpenses] = useState([])
