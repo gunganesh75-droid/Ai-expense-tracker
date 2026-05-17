@@ -1,5 +1,5 @@
 const path = require("path")
-require("dotenv").config({ path: path.resolve(__dirname, ".env") })
+require("dotenv").config({ path: path.resolve(__dirname, ".env"), quiet: true })
 const express = require("express")
 const mongoose = require("mongoose")
 const dns = require("dns")
@@ -8,8 +8,7 @@ const Expense = require("./models/Expense")
 const Profile = require("./models/Profile")
 const { getAIInsights } = require("./services/aiService")
 
-// Workaround for Windows/Node DNS SRV resolution issues with MongoDB Atlas
-dns.setServers(["8.8.8.8", "1.1.1.1"])
+// Workaround removed because it breaks Render's internal DNS
 
 const app = express()
 
