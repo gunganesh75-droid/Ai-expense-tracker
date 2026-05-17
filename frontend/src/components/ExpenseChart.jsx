@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useState, useEffect } from "react"
 import {
   PieChart,
   Pie,
@@ -11,6 +11,17 @@ import { ExpenseContext } from "../context/ExpenseContext"
 
 const ExpenseChart = () => {
   const { expenses } = useContext(ExpenseContext)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640)
+    }
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
   const COLORS = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#9B5DE5', '#00BFA6']
 
   const categoryTotals = expenses.reduce((totals, expense) => {
@@ -46,13 +57,15 @@ const ExpenseChart = () => {
 
       <div className="w-full h-80">
         <ResponsiveContainer>
-          <PieChart>
+          <PieChart margin={{ top: 10, right: isMobile ? 30 : 60, bottom: 10, left: isMobile ? 30 : 60 }}>
             <Pie
               data={displayData.length > 0 ? displayData : fallbackData}
               dataKey="value"
               cx="50%"
               cy="50%"
-              outerRadius={120}
+              innerRadius={isMobile ? 45 : 70}
+              outerRadius={isMobile ? 70 : 110}
+              paddingAngle={2}
               fill="#8884d8"
               label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
               labelLine={false}
@@ -74,14 +87,14 @@ const ExpenseChart = () => {
         </ResponsiveContainer>
       </div>
 
-      <div className="flex justify-center gap-6 mt-4">
+      <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4">
         {(displayData.length > 0 ? displayData : fallbackData).map((item, index) => (
-          <div key={item.name} className="flex items-center gap-2">
+          <div key={item.name} className="flex items-center gap-1.5">
             <div
-              className="w-4 h-4 rounded-full"
+              className="w-3 h-3 rounded-full"
               style={{ backgroundColor: COLORS[index % COLORS.length] }}
             ></div>
-            <span className="text-sm text-gray-600">{item.name}</span>
+            <span className="text-xs sm:text-sm text-gray-600 font-bold">{item.name}</span>
           </div>
         ))}
       </div>
