@@ -39,12 +39,7 @@ const ExpenseChart = () => {
   }, {})
 
   const displayData = Object.entries(categoryTotals).map(([name, value]) => ({ name, value }))
-  const fallbackData = [
-    { name: "Food", value: 1 },
-    { name: "Travel", value: 1 },
-    { name: "Shopping", value: 1 },
-    { name: "Bills", value: 1 },
-  ]
+  const hasData = displayData.length > 0
 
   return (
     <div className="bg-gradient-to-br from-white to-gray-50 p-6 rounded-xl shadow-lg mt-8 border border-gray-100">
@@ -55,49 +50,65 @@ const ExpenseChart = () => {
         </h2>
       </div>
 
-      <div className="w-full h-80">
-        <ResponsiveContainer>
-          <PieChart margin={{ top: 10, right: isMobile ? 30 : 60, bottom: 10, left: isMobile ? 30 : 60 }}>
-            <Pie
-              data={displayData.length > 0 ? displayData : fallbackData}
-              dataKey="value"
-              cx="50%"
-              cy="50%"
-              innerRadius={isMobile ? 45 : 70}
-              outerRadius={isMobile ? 70 : 110}
-              paddingAngle={2}
-              fill="#8884d8"
-              label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-              labelLine={false}
-            >
-              {(displayData.length > 0 ? displayData : fallbackData).map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value) => [`₹${value}`, 'Amount']}
-              contentStyle={{
-                backgroundColor: '#f8f9fa',
-                border: 'none',
-                borderRadius: '8px',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
-
-      <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4">
-        {(displayData.length > 0 ? displayData : fallbackData).map((item, index) => (
-          <div key={item.name} className="flex items-center gap-1.5">
-            <div
-              className="w-3 h-3 rounded-full"
-              style={{ backgroundColor: COLORS[index % COLORS.length] }}
-            ></div>
-            <span className="text-xs sm:text-sm text-gray-600 font-bold">{item.name}</span>
+      {hasData ? (
+        <>
+          <div className="w-full h-80">
+            <ResponsiveContainer>
+              <PieChart margin={{ top: 10, right: isMobile ? 30 : 60, bottom: 10, left: isMobile ? 30 : 60 }}>
+                <Pie
+                  data={displayData}
+                  dataKey="value"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={isMobile ? 45 : 70}
+                  outerRadius={isMobile ? 70 : 110}
+                  paddingAngle={2}
+                  fill="#8884d8"
+                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                  labelLine={false}
+                >
+                  {displayData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  formatter={(value) => [`₹${value.toLocaleString(undefined, { minimumFractionDigits: 2 })}`, 'Amount']}
+                  contentStyle={{
+                    backgroundColor: '#f8f9fa',
+                    border: 'none',
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
-        ))}
-      </div>
+
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4">
+            {displayData.map((item, index) => (
+              <div key={item.name} className="flex items-center gap-1.5">
+                <div
+                  className="w-3 h-3 rounded-full"
+                  style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                />
+                <span className="text-xs sm:text-sm text-gray-600 font-bold">{item.name}</span>
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="flex flex-col items-center justify-center h-64 text-center gap-4">
+          <div className="w-20 h-20 rounded-3xl bg-purple-50 flex items-center justify-center text-4xl">
+            📊
+          </div>
+          <div>
+            <p className="text-lg font-black text-slate-800 mb-1">No expenses yet</p>
+            <p className="text-sm text-slate-400 font-medium">
+              Add your first expense to see your spending breakdown here.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

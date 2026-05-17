@@ -16,9 +16,11 @@ const Analytics = () => {
     return totals
   }, {})
 
+  const hasExpenses = expenses.length > 0
   const totalExpenses = Object.values(categoryTotals).reduce((sum, value) => sum + value, 0)
-  const topCategory = Object.entries(categoryTotals).sort((a, b) => b[1] - a[1])[0]?.[0] || "-"
-  const highestSpending = topCategory === "-" ? "-" : `₹${categoryTotals[topCategory].toLocaleString(undefined, { minimumFractionDigits: 2 })}`
+  const topEntry = Object.entries(categoryTotals).sort((a, b) => b[1] - a[1])[0]
+  const topCategory = topEntry?.[0] || null
+  const highestSpending = topEntry ? `₹${topEntry[1].toLocaleString(undefined, { minimumFractionDigits: 2 })}` : null
 
   return (
     <DashboardLayout>
@@ -30,17 +32,29 @@ const Analytics = () => {
       <div className="grid sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-12">
         <div className="premium-card p-6 sm:p-8 group">
           <h2 className="text-slate-400 font-bold text-xs uppercase tracking-[0.2em] mb-3 group-hover:text-indigo-600 transition-colors">Highest Spending</h2>
-          <p className="text-2xl sm:text-3xl font-black text-slate-900">{highestSpending}</p>
+          {hasExpenses ? (
+            <p className="text-2xl sm:text-3xl font-black text-slate-900">{highestSpending}</p>
+          ) : (
+            <p className="text-base font-bold text-slate-300">Add expenses to see</p>
+          )}
         </div>
 
         <div className="premium-card p-6 sm:p-8 group">
           <h2 className="text-slate-400 font-bold text-xs uppercase tracking-[0.2em] mb-3 group-hover:text-indigo-600 transition-colors">Monthly Spending</h2>
-          <p className="text-2xl sm:text-3xl font-black text-slate-900">₹{totalExpenses.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+          {hasExpenses ? (
+            <p className="text-2xl sm:text-3xl font-black text-slate-900">₹{totalExpenses.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+          ) : (
+            <p className="text-base font-bold text-slate-300">₹0.00</p>
+          )}
         </div>
 
         <div className="premium-card p-6 sm:p-8 group">
           <h2 className="text-slate-400 font-bold text-xs uppercase tracking-[0.2em] mb-3 group-hover:text-indigo-600 transition-colors">Top Category</h2>
-          <p className="text-2xl sm:text-3xl font-black text-slate-900">{topCategory}</p>
+          {hasExpenses ? (
+            <p className="text-2xl sm:text-3xl font-black text-slate-900">{topCategory}</p>
+          ) : (
+            <p className="text-base font-bold text-slate-300">Add expenses to see</p>
+          )}
         </div>
       </div>
 
@@ -51,4 +65,4 @@ const Analytics = () => {
   )
 }
 
-export default Analytics
+export default Analytics
