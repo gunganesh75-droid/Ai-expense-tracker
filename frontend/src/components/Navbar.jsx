@@ -13,48 +13,56 @@ const Navbar = ({ toggleSidebar }) => {
   }, 0)
 
   return (
-    <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 px-2">
-      <div className="flex items-center gap-4 w-full lg:w-auto justify-between lg:justify-start">
-        <button 
-          className="lg:hidden text-slate-800 hover:text-indigo-600 transition-colors p-2"
-          onClick={toggleSidebar}
-        >
-          <FaBars className="text-2xl" />
-        </button>
-        <div className="flex-1">
-          <h1 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight mb-1 sm:mb-2">
-            {profile?.name ? `Hello, ${profile.name.split(' ')[0]} 👋` : 'Welcome Back 👋'}
-          </h1>
-          <p className="text-slate-500 font-medium text-sm sm:text-lg">
-            Here's what's happening with your money today.
-          </p>
+    <div className="w-full flex flex-col gap-5 px-1">
+      {/* Top Utility Header Row */}
+      <div className="flex items-center justify-between w-full">
+        {/* Left Side: Hamburger & Mobile Logo */}
+        <div className="flex items-center gap-2">
+          <button 
+            className="lg:hidden text-slate-800 hover:text-indigo-600 transition-colors p-2 -ml-2 rounded-xl active:bg-slate-100"
+            onClick={toggleSidebar}
+          >
+            <FaBars className="text-xl" />
+          </button>
+          
+          <div className="lg:hidden flex items-center">
+            <span className="font-extrabold text-lg text-slate-900 tracking-tight leading-none">
+              Expense<span className="text-indigo-600">AI</span>
+            </span>
+          </div>
+        </div>
+
+        {/* Right Side: Total Spend & Profile Avatar */}
+        <div className="flex items-center gap-4">
+          <div className="hidden sm:flex flex-col items-end">
+            <span className="text-[10px] uppercase tracking-widest font-black text-slate-400 mb-0.5">Total Spending</span>
+            <span className="text-lg font-black text-indigo-600">₹{totalExpenses.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+          </div>
+
+          <div className="h-8 w-[1px] bg-slate-200 hidden sm:block" />
+
+          <button
+            onClick={() => navigate('/profile')}
+            className="flex items-center gap-2 p-1 pr-3 rounded-xl bg-white border border-slate-200/80 hover:border-indigo-100 hover:bg-indigo-50/20 active:scale-95 transition-all duration-300 shadow-sm group"
+          >
+            <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-200">
+              <FaUserCircle className="text-base" />
+            </div>
+            <span className="text-xs font-black text-slate-700 group-hover:text-indigo-600 transition-colors">
+              {profile?.role || 'Member'}
+            </span>
+          </button>
         </div>
       </div>
 
-      <div className="flex items-center gap-6">
-        <div className="hidden md:flex flex-col items-end">
-          <span className="text-[10px] uppercase tracking-widest font-bold text-slate-400 mb-1">Total Spending</span>
-          <span className="text-2xl font-black text-indigo-600">₹{totalExpenses.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
-        </div>
-
-        <div className="h-12 w-[1px] bg-slate-200 hidden md:block" />
-
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => navigate('/profile')}
-            className="flex items-center gap-3 pl-2 pr-5 py-2 rounded-2xl bg-white border border-slate-200 hover:border-indigo-100 hover:bg-indigo-50/30 transition-all duration-300 shadow-sm group"
-          >
-            <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-200">
-              <FaUserCircle className="text-xl" />
-            </div>
-            <div className="text-left hidden sm:block">
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-0.5 leading-none">Account</p>
-              <p className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors leading-none">
-                {profile?.role || 'User'}
-              </p>
-            </div>
-          </button>
-        </div>
+      {/* Main Welcome Headline */}
+      <div className="w-full border-t border-slate-100/50 pt-3 lg:border-none lg:pt-0">
+        <h1 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight mb-1 sm:mb-2">
+          {profile?.name ? `Hello, ${profile.name.split(' ')[0]} 👋` : 'Welcome Back 👋'}
+        </h1>
+        <p className="text-slate-500 font-medium text-xs sm:text-base leading-none">
+          Here's what's happening with your money today.
+        </p>
       </div>
     </div>
   )
