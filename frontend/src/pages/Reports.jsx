@@ -16,7 +16,7 @@ const Reports = () => {
     return sum + (Number.isFinite(value) ? value : 0)
   }, 0)
 
-  const budget = profile?.monthlyBudget || 40000
+  const budget = profile?.monthlyBudget || 0
   const savings = Math.max(0, budget - totalExpenses)
   const usage = totalExpenses ? Math.min(100, (totalExpenses / budget) * 100) : 0
 

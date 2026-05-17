@@ -91,15 +91,7 @@ app.post("/api/expenses", async (req, res) => {
 
 app.get("/api/profile", async (req, res) => {
   try {
-    let profile = await Profile.findOne({ userId: req.userId })
-    if (!profile) {
-      profile = await Profile.create({
-        name: "New User",
-        role: "Member",
-        monthlyBudget: 40000,
-        userId: req.userId,
-      })
-    }
+    const profile = await Profile.findOne({ userId: req.userId })
     res.json(profile)
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -160,7 +152,7 @@ app.post("/api/ai-insights", async (req, res) => {
   try {
     const expenses = await Expense.find({ userId: req.userId })
     const profile = await Profile.findOne({ userId: req.userId })
-    const budget = profile?.monthlyBudget || 40000
+    const budget = profile?.monthlyBudget || 0
 
     console.log('AI Insight Request received. API Key Present:', !!process.env.GEMINI_API_KEY)
     

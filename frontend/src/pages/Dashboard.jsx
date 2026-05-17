@@ -15,7 +15,7 @@ const Dashboard = () => {
     return sum + (Number.isFinite(value) ? value : 0)
   }, 0)
 
-  const budget = profile?.monthlyBudget || 40000
+  const budget = profile?.monthlyBudget || 0
   const remainingBalance = Math.max(0, budget - totalExpenses)
   const totalSavings = remainingBalance
 
