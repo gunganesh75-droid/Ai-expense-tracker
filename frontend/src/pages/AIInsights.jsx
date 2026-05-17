@@ -36,15 +36,15 @@ const AIInsights = () => {
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col lg:flex-row items-start justify-between gap-8 mb-12">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-10">
         <div className="max-w-2xl">
-          <div className="flex items-center gap-4 mb-4">
+          <div className="flex items-center gap-4 mb-3">
             <div className="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-200 animate-pulse">
               <FaRobot className="text-xl" />
             </div>
-            <h1 className="text-4xl font-black text-slate-900 tracking-tight">AI Financial Brain</h1>
+            <h1 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">AI Financial Brain</h1>
           </div>
-          <p className="text-slate-500 text-lg font-medium leading-relaxed">
+          <p className="text-slate-500 text-sm sm:text-lg font-medium leading-relaxed">
             Powered by Google Gemini. Our advanced AI analyzes your spending patterns to give you professional financial advice and saving strategies.
           </p>
         </div>
@@ -52,7 +52,7 @@ const AIInsights = () => {
         <button 
           onClick={fetchInsights}
           disabled={loading}
-          className="btn-primary flex items-center gap-3 whitespace-nowrap"
+          className="btn-primary flex items-center gap-3 whitespace-nowrap w-full sm:w-auto"
         >
           {loading ? (
             <div className="animate-spin rounded-full h-5 w-5 border-2 border-white/30 border-t-white"></div>
@@ -82,9 +82,9 @@ const AIInsights = () => {
       )}
 
       {loading && !insights && (
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {[1, 2, 3].map(i => (
-            <div key={i} className="premium-card p-10 animate-pulse">
+            <div key={i} className="premium-card p-6 sm:p-10 animate-pulse">
               <div className="w-12 h-12 bg-slate-100 rounded-2xl mb-6"></div>
               <div className="h-4 bg-slate-100 rounded w-3/4 mb-4"></div>
               <div className="h-4 bg-slate-100 rounded w-1/2"></div>
@@ -95,8 +95,8 @@ const AIInsights = () => {
 
       {insights && (
         <div className="space-y-10 animate-slide-up">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="premium-card p-10 group hover:border-indigo-200 transition-all duration-500">
+          <div className="grid sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+            <div className="premium-card p-6 sm:p-10 group hover:border-indigo-200 transition-all duration-500">
               <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl mb-8 group-hover:scale-110 transition-transform">
                 <FaChartLine />
               </div>
@@ -104,7 +104,7 @@ const AIInsights = () => {
               <p className="text-slate-600 font-medium leading-relaxed">{insights.summary}</p>
             </div>
 
-            <div className="premium-card p-10 group hover:border-amber-200 transition-all duration-500">
+            <div className="premium-card p-6 sm:p-10 group hover:border-amber-200 transition-all duration-500">
               <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl mb-8 group-hover:scale-110 transition-transform">
                 <FaExclamationTriangle />
               </div>
@@ -112,7 +112,7 @@ const AIInsights = () => {
               <p className="text-slate-600 font-medium leading-relaxed">{insights.alert}</p>
             </div>
 
-            <div className="premium-card p-10 group hover:border-emerald-200 transition-all duration-500 bg-emerald-50/10">
+            <div className="premium-card p-6 sm:p-10 group hover:border-emerald-200 transition-all duration-500 bg-emerald-50/10">
               <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl mb-8 group-hover:scale-110 transition-transform">
                 <FaLightbulb />
               </div>

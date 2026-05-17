@@ -58,8 +58,8 @@ const Profile = () => {
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center justify-between mb-10">
           <div>
-            <h1 className="text-4xl font-black text-slate-900 tracking-tight mb-2">My Profile</h1>
-            <p className="text-slate-500 font-medium">Manage your personal settings and budget.</p>
+            <h1 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight mb-2">My Profile</h1>
+            <p className="text-slate-500 font-medium text-sm sm:text-base">Manage your personal settings and budget.</p>
           </div>
           <button
             onClick={() => navigate(-1)}
@@ -69,10 +69,10 @@ const Profile = () => {
           </button>
         </div>
 
-        <div className="grid lg:grid-cols-[1fr_2fr] gap-10">
+        <div className="grid lg:grid-cols-[1fr_2fr] gap-6 lg:gap-10">
           {/* Avatar Card */}
           <div className="space-y-6">
-            <div className="premium-card p-8 text-center relative overflow-hidden">
+            <div className="premium-card p-6 sm:p-8 text-center relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-r from-indigo-600 to-purple-600" />
               <div className="relative mt-4 mb-6">
                 <div className="w-24 h-24 rounded-[2rem] bg-white p-1.5 mx-auto shadow-xl">
@@ -114,7 +114,7 @@ const Profile = () => {
           </div>
 
           {/* Details Form */}
-          <div className="premium-card p-6 md:p-10">
+          <div className="premium-card p-6 sm:p-8 md:p-10">
             <div className="flex items-center justify-between mb-10">
               <h2 className="text-2xl font-black text-slate-900">Account Details</h2>
               <button

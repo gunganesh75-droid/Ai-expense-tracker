@@ -14,6 +14,11 @@ const profileSchema = new mongoose.Schema({
     required: true,
     default: 40000,
   },
+  userId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
 }, {
   timestamps: true,
 })

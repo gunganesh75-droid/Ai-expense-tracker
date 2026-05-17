@@ -16,6 +16,12 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+// Middleware to extract x-user-id from headers
+app.use((req, res, next) => {
+  req.userId = req.headers['x-user-id'] || 'default-user-id';
+  next();
+})
+
 const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URI
 if (!mongoUri) {
   console.error('Missing MongoDB connection string. Set MONGO_URI in your environment.')
@@ -45,7 +51,7 @@ app.get("/api/expenses", async (req, res) => {
 
   try {
 
-    const expenses = await Expense.find()
+    const expenses = await Expense.find({ userId: req.userId })
 
     res.json(expenses)
 
@@ -66,6 +72,7 @@ app.post("/api/expenses", async (req, res) => {
       title: req.body.title,
       amount: req.body.amount,
       category: req.body.category,
+      userId: req.userId,
     })
 
     const savedExpense = await newExpense.save()
@@ -84,12 +91,13 @@ app.post("/api/expenses", async (req, res) => {
 
 app.get("/api/profile", async (req, res) => {
   try {
-    let profile = await Profile.findOne()
+    let profile = await Profile.findOne({ userId: req.userId })
     if (!profile) {
       profile = await Profile.create({
-        name: "Shiva Sharma",
-        role: "Admin",
+        name: "New User",
+        role: "Member",
         monthlyBudget: 40000,
+        userId: req.userId,
       })
     }
     res.json(profile)
@@ -108,11 +116,12 @@ app.put("/api/profile", async (req, res) => {
     }
     
     const updatedProfile = await Profile.findOneAndUpdate(
-      {},
+      { userId: req.userId },
       {
         name: name.trim(),
         role: role.trim(),
         monthlyBudget: Number(monthlyBudget),
+        userId: req.userId,
       },
       {
         new: true,
@@ -131,7 +140,7 @@ app.delete("/api/expenses/:id", async (req, res) => {
 
   try {
 
-    await Expense.findByIdAndDelete(req.params.id)
+    await Expense.findOneAndDelete({ _id: req.params.id, userId: req.userId })
 
     res.json({
       message: "Expense deleted successfully",
@@ -149,8 +158,8 @@ app.delete("/api/expenses/:id", async (req, res) => {
 
 app.post("/api/ai-insights", async (req, res) => {
   try {
-    const expenses = await Expense.find()
-    const profile = await Profile.findOne()
+    const expenses = await Expense.find({ userId: req.userId })
+    const profile = await Profile.findOne({ userId: req.userId })
     const budget = profile?.monthlyBudget || 40000
 
     console.log('AI Insight Request received. API Key Present:', !!process.env.GEMINI_API_KEY)

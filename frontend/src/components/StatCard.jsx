@@ -22,7 +22,7 @@ const StatCard = ({ title, amount, trend }) => {
   }
 
   return (
-    <div className="premium-card p-8 group overflow-hidden relative">
+    <div className="premium-card p-6 sm:p-8 group overflow-hidden relative">
       <div className="flex items-center justify-between mb-6">
         <div className={`w-14 h-14 rounded-2xl ${getBg(title)} flex items-center justify-center text-2xl shadow-inner transition-transform duration-500 group-hover:rotate-12`}>
           {getIcon(title)}

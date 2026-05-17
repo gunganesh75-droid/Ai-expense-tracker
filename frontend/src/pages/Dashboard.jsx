@@ -56,7 +56,7 @@ const Dashboard = () => {
 
   return (
     <DashboardLayout>
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
         <div className="animate-slide-up stagger-1">
           <StatCard
             title="Total Expenses"

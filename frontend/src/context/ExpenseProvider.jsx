@@ -4,6 +4,21 @@ import { ExpenseContext } from "./ExpenseContext"
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "https://ai-expense-tracker-x49e.onrender.com"
 
+// Get or generate a unique user ID
+let userId = localStorage.getItem("ai_expense_tracker_user_id")
+if (!userId) {
+  userId = "user_" + Math.random().toString(36).substring(2, 11) + Date.now().toString(36)
+  localStorage.setItem("ai_expense_tracker_user_id", userId)
+}
+
+// Add x-user-id header to all axios requests automatically
+axios.interceptors.request.use((config) => {
+  config.headers["x-user-id"] = userId
+  return config
+}, (error) => {
+  return Promise.reject(error)
+})
+
 const ExpenseProvider = ({ children }) => {
   const [expenses, setExpenses] = useState([])
   const [profile, setProfile] = useState(null)

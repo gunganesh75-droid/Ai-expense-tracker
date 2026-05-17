@@ -97,26 +97,26 @@ const Reports = () => {
   return (
     <DashboardLayout>
       <div className="mb-10">
-        <h1 className="text-4xl font-black text-slate-900 tracking-tight mb-2">Financial Reports</h1>
-        <p className="text-slate-500 font-medium">Download and analyze your detailed monthly financial statements.</p>
+        <h1 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight mb-2">Financial Reports</h1>
+        <p className="text-slate-500 font-medium text-sm sm:text-base">Download and analyze your detailed monthly financial statements.</p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-8 mb-12">
-        <div className="premium-card p-8 group">
+      <div className="grid sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-12">
+        <div className="premium-card p-6 sm:p-8 group">
           <h2 className="text-slate-400 font-bold text-xs uppercase tracking-[0.2em] mb-3 group-hover:text-indigo-600 transition-colors">Monthly Expenses</h2>
-          <p className="text-3xl font-black text-slate-900">₹{totalExpenses.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+          <p className="text-2xl sm:text-3xl font-black text-slate-900">₹{totalExpenses.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
         </div>
 
-        <div className="premium-card p-8 group">
+        <div className="premium-card p-6 sm:p-8 group">
           <h2 className="text-slate-400 font-bold text-xs uppercase tracking-[0.2em] mb-3 group-hover:text-indigo-600 transition-colors">Savings</h2>
-          <p className="text-3xl font-black text-emerald-600">₹{savings.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+          <p className="text-2xl sm:text-3xl font-black text-emerald-600">₹{savings.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
         </div>
 
-        <div className="premium-card p-8 group">
+        <div className="premium-card p-6 sm:p-8 group">
           <h2 className="text-slate-400 font-bold text-xs uppercase tracking-[0.2em] mb-3 group-hover:text-indigo-600 transition-colors">Budget Usage</h2>
-          <div className="flex items-end gap-2">
-            <p className="text-3xl font-black text-slate-900">{usage.toFixed(0)}%</p>
-            <div className="flex-1 h-2 bg-slate-100 rounded-full mb-2 overflow-hidden">
+          <div className="flex items-center sm:items-end gap-2 flex-wrap sm:flex-nowrap">
+            <p className="text-2xl sm:text-3xl font-black text-slate-900">{usage.toFixed(0)}%</p>
+            <div className="flex-1 h-2 bg-slate-100 rounded-full mb-1 sm:mb-2 overflow-hidden min-w-[50px]">
               <div 
                 className={`h-full transition-all duration-1000 ${usage > 90 ? 'bg-rose-500' : 'bg-indigo-600'}`}
                 style={{ width: `${usage}%` }}
