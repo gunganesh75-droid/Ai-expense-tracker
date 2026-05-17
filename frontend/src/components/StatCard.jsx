@@ -27,14 +27,6 @@ const StatCard = ({ title, amount, trend }) => {
         <div className={`w-14 h-14 rounded-2xl ${getBg(title)} flex items-center justify-center text-2xl shadow-inner transition-transform duration-500 group-hover:rotate-12`}>
           {getIcon(title)}
         </div>
-        {trend && (
-          <div className="flex flex-col items-end">
-             <span className={`text-xs font-bold px-2 py-1 rounded-full ${trend > 0 ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}`}>
-              {trend > 0 ? '+' : ''}{trend}%
-            </span>
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-1">vs last month</span>
-          </div>
-        )}
       </div>
       
       <div>
