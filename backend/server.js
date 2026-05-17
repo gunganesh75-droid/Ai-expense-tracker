@@ -22,12 +22,17 @@ if (!mongoUri) {
   process.exit(1)
 }
 
-mongoose.connect(mongoUri)
+const maskedUri = mongoUri.replace(/:([^:@]+)@/, ':****@');
+console.log("Attempting to connect to MongoDB with URI:", maskedUri);
+
+mongoose.connect(mongoUri, {
+  serverSelectionTimeoutMS: 10000, // Fail fast after 10 seconds
+})
 .then(() => {
   console.log("MongoDB Connected 🚀")
 })
 .catch((error) => {
-  console.error("MongoDB connection error:", error)
+  console.error("MongoDB connection error details:", error)
   process.exit(1)
 })
 
