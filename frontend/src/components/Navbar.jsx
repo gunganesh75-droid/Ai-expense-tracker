@@ -58,7 +58,7 @@ const Navbar = ({ toggleSidebar }) => {
       {/* Main Welcome Headline */}
       <div className="w-full border-t border-slate-100/50 pt-3 lg:border-none lg:pt-0">
         <h1 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight mb-1 sm:mb-2">
-          {profile?.name ? `Hello, ${profile.name.split(' ')[0]} 👋` : 'Welcome Back 👋'}
+          {profile?.name ? `Hello, ${profile.name.split(' ')[0]} 👋` : 'Hello 👋'}
         </h1>
         <p className="text-slate-500 font-medium text-xs sm:text-base leading-none">
           Here's what's happening with your money today.

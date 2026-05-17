@@ -6,7 +6,7 @@ import { ExpenseContext } from '../context/ExpenseContext'
 
 const Profile = () => {
   const navigate = useNavigate()
-  const { profile, saveProfile, loading } = useContext(ExpenseContext)
+  const { expenses, profile, saveProfile, loading } = useContext(ExpenseContext)
   const [formData, setFormData] = useState({
     name: '',
     role: '',
@@ -52,6 +52,15 @@ const Profile = () => {
   }
 
   if (loading) return null;
+
+  const uniqueCategories = expenses ? new Set(expenses.map(exp => exp.category).filter(Boolean)).size : 0
+
+  const totalExpenses = expenses ? expenses.reduce((sum, exp) => {
+    const amount = typeof exp.amount === 'number' ? exp.amount : parseFloat(exp.amount) || 0
+    return sum + amount
+  }, 0) : 0
+  const budget = profile?.monthlyBudget || 0
+  const budgetPercentage = budget > 0 ? Math.min(100, (totalExpenses / budget) * 100) : 0
 
   return (
     <DashboardLayout>
@@ -105,10 +114,10 @@ const Profile = () => {
                   <h3 className="font-bold text-lg">Financial Health</h3>
                </div>
                <p className="text-indigo-100/70 text-sm leading-relaxed mb-6">
-                 Your budget is currently at <span className="text-white font-bold">₹{Number(formData.monthlyBudget).toLocaleString()}</span>. You are tracking 12 categories this month.
+                 Your budget is currently at <span className="text-white font-bold">₹{Number(formData.monthlyBudget).toLocaleString()}</span>. You are tracking <span className="text-white font-bold">{uniqueCategories}</span> {uniqueCategories === 1 ? 'category' : 'categories'} this month.
                </p>
                <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
-                  <div className="w-2/3 h-full bg-indigo-400 rounded-full" />
+                  <div className="h-full bg-indigo-400 rounded-full transition-all duration-500" style={{ width: `${budgetPercentage}%` }} />
                </div>
             </div>
           </div>

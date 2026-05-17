@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import { ExpenseContext } from "./ExpenseContext"
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "https://ai-expense-tracker-x49e.onrender.com"
+const API_BASE_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://localhost:5000" : "https://ai-expense-tracker-x49e.onrender.com")
 
 // Get or generate a unique user ID
 let userId = localStorage.getItem("ai_expense_tracker_user_id")

@@ -8,7 +8,16 @@ const Expense = require("./models/Expense")
 const Profile = require("./models/Profile")
 const { getAIInsights } = require("./services/aiService")
 
-// Workaround removed because it breaks Render's internal DNS
+// Fix DNS SRV issues locally on Windows (avoiding Render internal DNS breakage)
+if (process.env.NODE_ENV !== "production" && !process.env.RENDER) {
+  try {
+    dns.setServers(["8.8.8.8", "1.1.1.1"])
+    console.log("DNS servers set to Google & Cloudflare for local dev 🛠️")
+  } catch (err) {
+    console.warn("Could not set custom DNS servers:", err.message)
+  }
+}
+
 
 const app = express()
 
